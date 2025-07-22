@@ -1,0 +1,46 @@
+
+<div  class="unauthorised-page rounded-lg" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);">
+    <div style="animation: bounceIn 1s;">
+        <svg width="100" height="100" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" fill="#ff4d4f" opacity="0.15"/>
+            <path d="M12 8v4" stroke="#ff4d4f" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="16" r="1" fill="#ff4d4f"/>
+            <circle cx="12" cy="12" r="9" stroke="#ff4d4f" stroke-width="2"/>
+        </svg>
+    </div>
+    <h1 style="font-size: 2.5rem; color: #ff4d4f; margin: 24px 0 8px; animation: fadeInDown 1s 0.3s both;">401 - Unauthorised</h1>
+    <p style="font-size: 1.2rem; color: #333; margin-bottom: 32px; animation: fadeInUp 1s 0.6s both;">
+        You do not have permission to access this page.<br>
+        Your session may have also expired.
+    </p>
+    <a (click)="router.navigate(['/'])" style="cursor: pointer; padding: 12px 32px; background: #007bff; color: #fff; border-radius: 24px; text-decoration: none; font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: background 0.2s; animation: fadeIn 1s 1s both;">
+       <i class="pi pi-home"></i> Home
+        </a>
+        
+    <button (click)="router.navigate(['/signup'])" style="margin-top: 16px; padding: 12px 32px; background:#10B981 ; color: #fff; border: none; border-radius: 24px; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: background 0.2s; animation: fadeIn 1s 1.2s both;">
+       <i class="pi pi-user" ></i>  Login 
+    </button>
+</div>
+<style>
+@keyframes bounceIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.1); opacity: 1; }
+    80% { transform: scale(0.95);}
+    100% { transform: scale(1);}
+}
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-40px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeIn {
+    from { opacity: 0;}
+    to { opacity: 1;}
+}
+a:hover {
+    background: #0056b3;
+}
+</style>

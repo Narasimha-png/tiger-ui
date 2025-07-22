@@ -1,0 +1,179 @@
+<div  class="card flex justify-center min-h-[85vh] ">
+    <p-stepper [(value)]="activeStep" class="basis-[40rem]">
+        <p-step-list>
+            <p-step [value]="1" class="flex flex-row flex-auto gap-2">
+                <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                    <button class="bg-transparent border-0 inline-flex flex-col gap-2" >
+                        <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center" [ngClass]="{
+                'bg-primary text-primary-contrast border-primary':
+                  value <= activeStep,
+                'border-surface': value > activeStep
+              }">
+                            <i class="pi pi-user"></i>
+                        </span>
+                    </button>
+                </ng-template>
+            </p-step>
+
+            <p-step [value]="2" class="flex flex-row flex-auto gap-2">
+                <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                    <button class="bg-transparent border-0 inline-flex flex-col gap-2" >
+                        <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center" [ngClass]="{
+                'bg-primary text-primary-contrast border-primary':
+                  value <= activeStep,
+                'border-surface': value > activeStep
+              }">
+                            <i class="pi pi-star"></i>
+                        </span>
+                    </button>
+                </ng-template>
+            </p-step>
+
+            <p-step [value]="3" class="flex flex-row flex-auto gap-2">
+                <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                    <button class="bg-transparent border-0 inline-flex flex-col gap-2" >
+                        <span class="rounded-full border-2 w-12 h-12 inline-flex items-center justify-center" [ngClass]="{
+                'bg-primary text-primary-contrast border-primary':
+                  value <= activeStep,
+                'border-surface': value > activeStep
+              }">
+                            <i class="pi pi-check-circle"></i>
+                        </span>
+                    </button>
+                </ng-template>
+            </p-step>
+        </p-step-list>
+
+        <p-step-panels>
+            <p-step-panel [value]="1">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-col gap-2 mx-auto items-center" style=" max-width: 20rem">
+                        <div class="text-center mt-4 mb-4 text-xl font-semibold">
+                            SignIn Options
+                        </div>
+                        <p-button label="Login with LinkedIn" icon="pi pi-linkedin" class="p-button-rounded"
+                            (click)="loginWithLinkedIn()"></p-button>
+                        <a (click)="showDialog()" style="
+    cursor: pointer;
+    color: #0077b5;
+    font-weight: 500;
+    text-decoration: none;
+    transition: text-decoration 0.2s;
+">Why LinkedIn?</a>
+
+                    </div>
+                    <div class="flex pt-6 justify-end">
+                        <p-button disabled (onClick)="activateCallback(2)" label="Next" icon="pi pi-arrow-right"
+                            iconPos="right" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="2">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                        <div class="text-center mt-4 mb-4 text-xl font-semibold">
+                            Make your targets
+                        </div>
+                        <app-leetcode [leetcode]="user"></app-leetcode>
+                        <app-github [github]="user"></app-github>
+                    </div>
+                    <div class="flex pt-6 justify-between">
+                        <p-button disabled (onClick)="activateCallback(1)" label="Back" severity="secondary"
+                            icon="pi pi-arrow-left" />
+
+                        <p-button (onClick)="activateCallback(3)" label="Skip" icon="pi pi-arrow-right"
+                            iconPos="right" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="3">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-col gap-2 mx-auto" style="min-height: 16rem; max-width: 24rem">
+                        <div class="text-center mt-4 mb-4 text-xl font-semibold">
+                            Account created successfully 🎉 
+                        </div>
+                    </div>
+                    <div class="flex pt-6 justify-center">
+                        <p-button (click)="router.navigate(['dashboard'])" label="Dashboard" severity="success" icon="pi pi-angle-double-right" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+        </p-step-panels>
+    </p-stepper>
+</div>
+<p-dialog header="Leetcode 🤝 DSA" [modal]="true" [(visible)]="visibleLeetCode"
+    [style]="{ width: '88vw', maxWidth: '800px' }">
+
+    <div class="h-[3vh]"></div>
+    @if(showProfileDiv){
+    <ng-container *ngIf="!loading; else skeletonTemplate">
+        <div class="flex flex-wrap justify-center items-center gap-8 fade-in-quick">
+            <div pAnimateOnScroll enterClass="animate-enter fade-in-10 slide-in-from-t-20 animate-duration-1000"
+                leaveClass="animate-leave fade-out-0"
+                class="flex flex-col border border-primary-200 shadow-lg justify-center items-center max-w-80 rounded-2xl p-8 gap-4">
+                <p-avatar [image]="profile?.avatar" shape="circle" size="xlarge"></p-avatar>
+                <span class="text-2xl font-medium">{{ profile?.name }}</span>
+                <span class="text-muted-color text-center">Rank: {{ profile?.ranking|number }}</span>
+                <span class="text-muted-color text-center">{{ profile?.about }}</span>
+                <div class="flex items-center gap-2">
+                    <p-button label="no, it's not me" severity="secondary"></p-button>
+                    <p-button label="yes, it's me" severity="success" (click)="showProfileDiv = false"></p-button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    }
+    @else{
+    <div class="flex items-center gap-4 mb-4">
+        <label for="username" class="font-semibold w-24">Username</label>
+        <input pInputText [(ngModel)]="leetcodeUserName" id="username" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="h-[3vh]"></div>
+    <div class="flex justify-end gap-2">
+        <p-button label="Cancel" severity="secondary" (click)="visibleLeetCode = false" />
+        <p-button label="Search" (click)="showLeetcodeProfile()" />
+    </div>
+    }
+    <ng-template #skeletonTemplate>
+        <div class="flex flex-wrap justify-center items-center gap-8 fade-in-quick">
+            <div
+                class="flex flex-col border border-surface-200 shadow-md justify-center items-center max-w-80 rounded-2xl p-8 gap-4 min-w-[20vw] min-h-[45vh]">
+                <p-skeleton shape="circle" size="4rem"></p-skeleton>
+                <p-skeleton [style.width]="'60%'" [style.height]="'1.5rem'" styleClass="border-round"></p-skeleton>
+                <p-skeleton [style.width]="'80%'" [style.height]="'1.2rem'" styleClass="border-round"></p-skeleton>
+
+
+                <div class="flex items-center gap-2">
+                    <p-skeleton width="5rem" height="2rem"></p-skeleton>
+                    <p-skeleton width="5rem" height="2rem"></p-skeleton>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+
+</p-dialog>
+<p-dialog header="GitHub 🤝 Dev" [modal]="true" [(visible)]="visibleGitHub" [style]="{ width: '25rem' }">
+    <div class="flex items-center gap-4 mb-4">
+        <label for="username" class="font-semibold w-24">Username</label>
+        <input pInputText id="username" class="flex-auto" autocomplete="off" />
+    </div>
+
+    <div class="flex justify-end gap-2">
+        <p-button label="Cancel" severity="secondary" (click)="visibleGitHub = false" />
+        <p-button label="Save" (click)="visibleGitHub = false" />
+    </div>
+</p-dialog>
+
+
+<p-dialog header="LinkedIn Privacy and Agreement" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+   <p class="mb-8">
+        We understand that sharing your achievements is important, which is why we offer the option to connect your LinkedIn account. This integration allows you to share your success with your professional network when you reach your goals.
+    We use LinkedIn login solely to securely retrieve your access token so that we can post a celebratory update on your behalf when you achieve your goal. Rest assured, no personal data is extracted beyond what is necessary for this purpose, and nothing is posted automatically without your explicit consent. Once your goal is reached, you have the option to enable or disable LinkedIn posting at any time from your account settings. Your privacy and control remain our highest priorities, and this integration is provided purely for your convenience in sharing your success.
+  </p>
+
+</p-dialog>
+ <p-toast />

@@ -1,0 +1,44 @@
+<div class="card flex flex-col items-center  min-h-[86vh]">
+  @if (activities.length === 0) {
+    <div
+      class="flex items-center margin-auto   border mt-3 justify-between min-w-[80vw] rounded-2xl p-8 gap-4 animate-pulse transition-all duration-700"
+    >
+      <p-skeleton [style.width]="'6rem'" [style.height]="'1.5rem'" styleClass="border-round"></p-skeleton>
+      <p-skeleton [style.width]="'9rem'" [style.height]="'1.2rem'" styleClass="border-round"></p-skeleton>
+    </div>
+    <div
+      class="flex items-center margin-auto border mt-3 justify-between min-w-[80vw] rounded-2xl p-8 gap-4 animate-pulse transition-all duration-700"
+    >
+      <p-skeleton [style.width]="'6rem'" [style.height]="'1.5rem'" styleClass="border-round"></p-skeleton>
+      <p-skeleton [style.width]="'9rem'" [style.height]="'1.2rem'" styleClass="border-round"></p-skeleton>
+    </div>
+    <div
+      class="flex items-center margin-auto   border mt-3 justify-between min-w-[80vw] rounded-2xl p-8 gap-4 animate-pulse transition-all duration-700"
+    >
+      <p-skeleton [style.width]="'6rem'" [style.height]="'1.5rem'" styleClass="border-round"></p-skeleton>
+      <p-skeleton [style.width]="'9rem'" [style.height]="'1.2rem'" styleClass="border-round"></p-skeleton>
+    </div>
+  } @else {
+    @for (activity of activities; track activity.activityId) {
+      <div
+        pAnimateOnScroll
+        enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000"
+        class="flex items-center margin-auto   border-l-gray-50 dark:border-gray-700 border mt-3 justify-between min-w-[80vw] rounded-2xl p-8 gap-4 transition-opacity duration-500 ease-in"
+      >
+        @if (activity.status === 'LOGIN') {
+          <span class="bg-primary font-medium rounded-xl px-4 py-2">
+            <i class="pi pi-sign-in"></i> {{ activity?.status }}
+          </span>
+        } @else {
+          <span class="bg-red-200 font-medium rounded-xl px-4 py-2">
+            <i class="pi pi-sign-out"></i> {{ activity?.status }}
+          </span>
+        }
+
+        <span>
+          {{ (activity?.timestamp?.split('.')[0]) | date: 'medium' }}
+        </span>
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,35 @@
+<div class="card min-h-[86vh] flex flex-col items-center">
+  <div pAnimateOnScroll
+    class="flex margin-auto border-l-gray-50 dark:border-gray-700 border mt-3  items-center justify-between min-w-[80vw] rounded-2xl p-8 gap-4 transition-opacity duration-500 ease-in">
+    <span class="font-medium rounded-xl px-4 py-2">
+      <i class="pi pi-linkedin"></i> LinkedIn Posting Status
+    </span>
+
+
+    <span class="scale-500">
+      @if(isLoading){
+      <i class="pi pi-spin pi-spinner"></i>
+      }@else{
+      <p-toggleswitch [(ngModel)]="checked" (onChange)="onToggle($event)">
+        <ng-template #handle let-checked="checked">
+          <i [ngClass]="['!text-xs', 'pi', checked ? 'pi-check' : 'pi-times']"></i>
+        </ng-template>
+      </p-toggleswitch>
+      }
+
+    </span>
+  </div>
+
+   <div pAnimateOnScroll
+    class="flex margin-auto border-l-gray-50 dark:border-gray-700 border mt-3 items-center justify-between hover:bg-red-300 min-w-[80vw] rounded-2xl p-8 gap-4 transition-opacity duration-500 ease-in cursor-pointer" (click)="confirm1($event)">
+    <span class="font-medium rounded-xl px-4 py-2 text-red-600" >
+      <i class="pi pi-sign-out mr-2"></i> Logout
+    </span>
+
+  
+
+  </div>
+</div>
+
+ <p-toast />
+  <p-confirmdialog />

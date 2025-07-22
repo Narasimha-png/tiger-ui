@@ -1,0 +1,224 @@
+     :host {
+         @keyframes slidedown-icon {
+             0% {
+                 transform: translateY(0);
+             }
+
+             50% {
+                 transform: translateY(20px);
+             }
+
+             100% {
+                 transform: translateY(0);
+             }
+         }
+
+         .slidedown-icon {
+             animation: slidedown-icon;
+             animation-duration: 3s;
+             animation-iteration-count: infinite;
+         }
+
+         .box {
+             background-image: radial-gradient(var(--primary-300), var(--primary-600));
+             border-radius: 50% !important;
+             color: var(--primary-color-text);
+         }
+     }
+
+
+
+$dark-blue: #243B55;
+$medium-blue:#88f8d3;
+$white: #ffffff;
+
+.parent-bg {
+  position: relative;
+  width: 98vw;
+  height: auto; 
+  padding-bottom: 20px;
+  padding: 1rem;
+
+  @media (min-width: 1024px) {
+    height: 80vh;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('/trans.png');
+      background-repeat: no-repeat;
+      background-position: calc(100% - 40px) bottom;
+      background-size: contain;
+      opacity: 1;
+      z-index: 0;
+      pointer-events: none;
+    }
+  }
+
+  .bg-image-small {
+    display: block;
+    width: 94%;
+    width: 400px;
+    overflow-x: hidden;
+    @media (min-width: 1024px) {
+      display: none;
+    }
+  }
+}
+
+.heading-container {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  max-width: 60vw;
+
+  @media (max-width: 1023px) {
+    max-width: 100vw; 
+  padding: 10px;
+  }
+
+  h1 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: sans-serif;
+    font-size: 5.5rem;
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0;
+    
+
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+         margin: 0px;
+      padding: 0px;
+    }
+
+    @media (max-width: 576px) {
+      font-size: 2.5rem;
+         margin: 0px;
+      padding: 0px;
+    }
+
+ .highlight-top {
+  font-family: 'nothingfont', sans-serif;
+ 
+  
+}
+@font-face {
+  font-family: 'nothingfont';
+  src: url('/fonts/NDot57Caps.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+    
+
+    .highlight-bottom {
+      background-color: $medium-blue;
+    
+      display: block;
+    }
+  }
+
+  p {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    max-width: 90%;
+    @media (max-width: 720px) {
+      font-size: 13px;
+    }
+  }
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #10B981;
+  color: $dark-blue;
+  font-weight: bold;
+  font-size: 1.25rem;
+  padding: 16px 32px;
+  margin-top: 30px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  font-family: sans-serif;
+
+  .tiger-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  &:hover {
+    background-color: darken($medium-blue, 10%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
+::ng-deep .tiger-button .p-button {
+  position: relative;
+  padding: 0.8rem;
+  margin-top: 35px;
+    font-family: 'nothingfont', sans-serif;
+    font-size: 1.4rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, #52eab7, #10B981);
+  color: white;
+  border: none;
+  font-weight: 600;
+
+  transition: transform 0.3s;
+
+  @media (min-width:1034px) {
+    width: 15vw;
+  }
+}
+
+::ng-deep .tiger-button .p-button:hover {
+  transform: scale(1.03);
+  
+}
+
+::ng-deep .tiger-button .p-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  transform: skewX(-20deg);
+  animation: shine 2.5s infinite;
+  pointer-events: none;
+}
+.comic{
+  width: 12rem;
+  height: 12rem;
+}

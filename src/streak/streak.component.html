@@ -1,0 +1,73 @@
+<div class="card min-w-[98vw] min-h-[86vh] flex flex-col  items-center gap-4 p-4 font-mono">
+  <p
+    class="bg-gradient-to-r from-[#10b981] to-[#8b5cf6] bg-clip-text text-transparent text-[3rem] font-extrabold"
+  >
+    Montly Streak
+  </p>
+  
+
+@if(!streakData){
+  <div class="flex justify-between items-center mb-4"><p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s" [style]="{ width: '50px', height: '50px' }" />
+</div>
+}@else{
+<div class="bg-white rounded-lg shadow p-6 w-full max-w-xl mx-auto  dark:bg-surface-900">
+  
+  <div class="flex justify-between items-center mb-4">
+    <p-button icon="pi pi-chevron-left" (click)="prevMonth()" [disabled]="currentMonth == joinedMonth"  />
+    <div class="font-semibold text-lg">{{ getMonthName() }} {{ currentYear }}</div>
+    <p-button icon="pi pi-chevron-right" (click)="nextMonth()" [disabled]="currentMonth == todayMonth" />
+  </div>
+
+  <div class="grid grid-cols-7 text-center font-bold mb-2">
+    <div *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">{{ day }}</div>
+  </div>
+
+  <div class="grid grid-rows-6 gap-2">
+    <div *ngFor="let week of getDaysInMonth()" class="grid grid-cols-7 gap-2">
+      <div *ngFor="let day of week">
+       <div
+  *ngIf="day"
+  class="flex justify-center items-center h-12 w-12 rounded-full border-2"
+  [ngClass]="{
+    'bg-orange-100 text-orange-600 font-semibold': isStreak(day),
+    'text-sm text-red-500': isMissed(day),
+    'border-green-500': isToday(day),
+    'border-transparent': !isToday(day)
+  }"
+>
+
+<ng-container *ngIf="isStreak(day); else notStreakOrMissed">
+  <img src="/fire.png" alt="Streak Met" class="h-8 w-8 object-contain" />
+</ng-container>
+
+<ng-template #notStreakOrMissed>
+  <ng-container *ngIf="isMissed(day); else showDate">
+    <img src="/crying.png" alt="Missed" class="h-8 w-8 object-contain" />
+  </ng-container>
+</ng-template>
+
+<ng-template #showDate>
+  <span class="text-sm font-medium text-gray-700 dark:text-white">{{ day.getDate() }}</span>
+</ng-template>
+
+        </div>
+        <div *ngIf="!day" class="h-12 w-12"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="flex justify-around mt-6  font-medium">
+    <div class="flex flex-col justify-center items-center border-2 p-5 rounded-3xl w-[150px] max-w-[150px]">
+      <div class="text-center" >🔥 </div> 
+      <div class="text-lg font-thin">Current Streak: </div>
+      <div class=" text-[3rem] text-[#10b981] text-center"> {{ getCurrentStreak() }}</div>
+    </div>
+    <div class="flex flex-col justify-center items-center border-2 p-5 rounded-3xl w-[150px]  max-w-[150px]">
+      <div class="text-center" >🔥 </div> 
+      <div class="text-lg font-thin">Max Streak: </div>
+      <div class=" text-[3rem] text-[#10b981]  text-center">{{ getMaxStreak() }}</div>
+    </div>
+  </div> -->
+</div>
+}
+</div>
