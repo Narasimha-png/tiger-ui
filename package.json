@@ -1,14 +1,12 @@
 {
   "name": "tiger",
   "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:elevator": "node dist/elevator/server/server.mjs"
-  },
+ "scripts": {
+  "dev:ssr": "ng run tiger:serve-ssr",
+  "build:ssr": "ng build --configuration production && ng run tiger:server:production",
+  "start": "node dist/tiger/server/main.server.mjs"
+}
+,
   "private": true,
   "dependencies": {
     "@angular/animations": "^19.0.1",

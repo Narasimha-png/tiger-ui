@@ -189,6 +189,6 @@ export class SignupComponent {
   }
 
   loginWithLinkedIn() {
-    window.location.href = 'http://localhost:8080/api/tiger/user/linkedin/login';
+    window.location.href = 'https://tiger-backend-production.up.railway.app/api/tiger/user/linkedin/login';
     }
 }
