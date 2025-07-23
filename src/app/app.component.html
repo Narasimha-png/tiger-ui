@@ -1,9 +1,8 @@
-<div >
 
-  <p-megamenu [model]="items" [style]="{ 'border-radius': '1rem', display: 'flex' ,position:'sticky' , top:'10px'}"
-    styleClass="p-10 bg-white dark:bg-surface-900 "
-      appendTo="body"
-  panelStyleClass="custom-mega-panel">
+<div>
+
+  <p-megamenu [model]="items" [style]="{ padding:'1rem' }"
+    styleClass="p-10 bg-surface-0 dark:bg-surface-900">
 
     <ng-template #start>
       <svg (click)="navigateTo('/')" width="31" height="31" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#000000">
@@ -89,6 +88,7 @@
     </ng-template>
   </p-megamenu>
 </div>
+
 <div class="h-[1rem]"></div>
 <router-outlet></router-outlet>
 <p-popover #op>

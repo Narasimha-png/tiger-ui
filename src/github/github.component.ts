@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ImportsModule } from '../app/imports';
 import { MessageService } from 'primeng/api';
 import { GithubProfile, ProfileService, User } from '../app/profile.service';
@@ -13,6 +13,8 @@ import { AuthService } from '../app/auth.service';
   styleUrl: './github.component.scss'
 })
 export class GithubComponent {
+  @Output()
+  userNameEmitter = new EventEmitter<string>();
    @Input()
   github: User | null | undefined = null;
    gitUserName: string | null | undefined = this.github?.githubProfile;
@@ -97,6 +99,7 @@ export class GithubComponent {
      next: (response) => {
        this.isUpdatingGithubProfile = false;  
        if (response.status === 200) {
+        this.userNameEmitter.emit(this.GithubUserName);
          this.messageService.add({
            severity: 'success',
            summary: 'Profile Updated',

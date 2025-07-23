@@ -44,7 +44,6 @@ selectedHelpOption:any=null ;
   ngOnInit() {
     setTimeout(() => {
       if (
-        Notification.permission == 'granted' ||
         Notification.permission == 'default'
       ) {
         this.visible = true;

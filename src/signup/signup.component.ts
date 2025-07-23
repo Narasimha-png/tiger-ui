@@ -17,36 +17,46 @@ import { GithubComponent } from '../github/github.component';
 
 @Component({
   selector: 'app-signup',
-  imports: [ImportsModule, ReactiveFormsModule, FormsModule, LeetcodeComponent, GithubComponent],
-  providers: [MessageService, { provide: LOCALE_ID, useValue: 'en-IN' }, ProfileService],
+  imports: [
+    ImportsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    LeetcodeComponent,
+    GithubComponent,
+  ],
+  providers: [
+    MessageService,
+    { provide: LOCALE_ID, useValue: 'en-IN' },
+    ProfileService,
+  ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
 export class SignupComponent {
   loading: boolean | undefined;
-  showProfileDiv: boolean |undefined;
-  btnName: string ="" ;
-  btnNames: string[] = [ 'yes, its me', 'no, its not me' ];
+  showProfileDiv: boolean | undefined;
+  btnName: string = '';
+  btnNames: string[] = ['yes, its me', 'no, its not me'];
   activeStep: number = 1;
   profile?: LeetCodeProfile;
   name: string | undefined;
   value: number = 2;
   email: string | undefined;
   leetcodeUserName: string = '';
+  githubUserName: string = '';
   password: string = '';
   visibleLeetCode: boolean = false;
   visibleGitHub: boolean = false;
-   visible: boolean = false;
+  visible: boolean = false;
 
-    showDialog() {
-        this.visible = true;
-    }
-
+  showDialog() {
+    this.visible = true;
+  }
 
   showLeetcode() {
     this.visibleLeetCode = true;
-    this.loading = false ;
-    this.showProfileDiv = false ;
+    this.loading = false;
+    this.showProfileDiv = false;
   }
   showGitHub() {
     this.visibleGitHub = true;
@@ -57,29 +67,28 @@ export class SignupComponent {
   totalSizePercent: number = 0;
   index: number = 0;
   platformId = inject(PLATFORM_ID);
-  user:User |undefined ;
+  user: User | undefined;
 
   constructor(
     private config: PrimeNG,
     private messageService: MessageService,
-    private profileService: ProfileService , 
-    private route: ActivatedRoute , 
-    public router:Router,
+    private profileService: ProfileService,
+    private route: ActivatedRoute,
+    public router: Router,
     private authService: AuthService
   ) {}
 
   ngOnInit() {
-    this.authService.refreshNav.subscribe(val => {
-    this.user = undefined ;
-    if (this.authService.loggedIn.value) {
-      this.profileService.getUserProfile().subscribe(user => {
-        this.user = user;
-        console.log(user) ;
-      });
-
-    }
-  });
-    this.btnName = this.btnNames[0]; 
+    this.authService.refreshNav.subscribe((val) => {
+      this.user = undefined;
+      if (this.authService.loggedIn.value) {
+        this.profileService.getUserProfile().subscribe((user) => {
+          this.user = user;
+          console.log(user);
+        });
+      }
+    });
+    this.btnName = this.btnNames[0];
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('sessionId');
       if (token) {
@@ -87,7 +96,7 @@ export class SignupComponent {
       }
     }
     this.route.queryParams.subscribe((params) => {
-      if (params['code']) { 
+      if (params['code']) {
         this.authService.login(params['code']);
         this.activeStep = 2;
         this.messageService.add({
@@ -96,7 +105,6 @@ export class SignupComponent {
           detail: 'You have successfully logged in.',
           life: 3000,
         });
-       
       }
     });
   }
@@ -154,8 +162,8 @@ export class SignupComponent {
     this.loading = true;
     this.showProfileDiv = true;
     if (this.leetcodeUserName.trim() === '') {
-        this.loading = false;
-    this.showProfileDiv = false;
+      this.loading = false;
+      this.showProfileDiv = false;
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -165,20 +173,21 @@ export class SignupComponent {
     }
     this.profileService.getLeetCodeProfile(this.leetcodeUserName).subscribe(
       (profile: LeetCodeProfile) => {
-         if( profile.ranking ==null || profile.ranking == undefined) {   
-        this.showProfileDiv = false ;
+        if (profile.ranking == null || profile.ranking == undefined) {
+          this.showProfileDiv = false;
           this.messageService.add({
-            severity: 'warn', summary:'No user found with this username',
-            detail: 'Please check the username and try again.',})
+            severity: 'warn',
+            summary: 'No user found with this username',
+            detail: 'Please check the username and try again.',
+          });
         }
         console.log(profile);
         this.loading = false;
         this.profile = profile;
         this.visibleLeetCode = true;
-       
       },
       (error) => {
-        this.showProfileDiv = false ;
+        this.showProfileDiv = false;
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -189,6 +198,14 @@ export class SignupComponent {
   }
 
   loginWithLinkedIn() {
-    window.location.href = 'https://tiger-backend-production.up.railway.app/api/tiger/user/linkedin/login';
-    }
+    window.location.href =
+      'https://tiger-backend-production.up.railway.app/api/tiger/user/linkedin/login';
+  }
+
+  getLeetcodeUserName(event: string) {
+    this.leetcodeUserName = event;
+  }
+  getGithubUserName(event: string) {
+    this.githubUserName = event;
+  }
 }

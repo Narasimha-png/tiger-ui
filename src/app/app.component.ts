@@ -100,7 +100,7 @@ export class AppComponent {
         path: 'roastings',
       },
       {
-        label: 'streak',
+        label: 'Streak',
         root: true,
         path: 'streak',
       },

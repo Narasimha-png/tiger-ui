@@ -75,15 +75,16 @@
                         <div class="text-center mt-4 mb-4 text-xl font-semibold">
                             Make your targets
                         </div>
-                        <app-leetcode [leetcode]="user"></app-leetcode>
-                        <app-github [github]="user"></app-github>
+                        <p class="text-red-400">*Please add your leetcode and github usernames</p>
+                        <app-leetcode [leetcode]="user" (userNameEmitter)="getGithubUserName($event)"></app-leetcode>
+                        <app-github [github]="user" (userNameEmitter)="getLeetcodeUserName($event)"></app-github>
                     </div>
                     <div class="flex pt-6 justify-between">
                         <p-button disabled (onClick)="activateCallback(1)" label="Back" severity="secondary"
                             icon="pi pi-arrow-left" />
 
-                        <p-button (onClick)="activateCallback(3)" label="Skip" icon="pi pi-arrow-right"
-                            iconPos="right" />
+                        <p-button (onClick)="activateCallback(3)" label="Next" icon="pi pi-arrow-right"
+                            iconPos="right" [disabled]="leetcodeUserName.length == 0 || githubUserName.length == 0" />
                     </div>
                 </ng-template>
             </p-step-panel>

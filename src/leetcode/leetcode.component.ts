@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LeetCodeProfile, ProfileService, User } from '../app/profile.service';
 import { ImportsModule } from '../app/imports';
 import { MessageService } from 'primeng/api';
@@ -12,6 +12,8 @@ import { AuthService } from '../app/auth.service';
   styleUrl: './leetcode.component.scss',
 })
 export class LeetcodeComponent {
+  @Output() 
+   userNameEmitter = new EventEmitter<string>();
   @Input()
   leetcode: User | null | undefined = null;
   userName: string | null | undefined = this.leetcode?.leetcodeProfile;
@@ -100,6 +102,7 @@ export class LeetcodeComponent {
         next: (response) => {
           this.isUpdatingLeetCodeProfile = false;
           if (response.status === 200) {
+            this.userNameEmitter.emit(this.leetcodeUserName);
             this.messageService.add({
               severity: 'success',
               summary: 'Profile Updated',
