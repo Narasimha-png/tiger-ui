@@ -35,7 +35,9 @@ export class GithubComponent {
    ) {}
  
    ngOnInit(){
-
+    if(this.github != null && this.github.githubProfile != null) {
+      this.userNameEmitter.emit(this.github.githubProfile);
+    }
    }
    showGithubProfile(): void {
      this.loading = true;
@@ -88,6 +90,7 @@ export class GithubComponent {
       if (this.github != null && this.github.githubProfile != null) {
       this.GithubUserName = this.github.githubProfile ;
       this.progress = this.github?.targetCommits ?? 2;
+    
       this.showGithubProfile() ;
     }
    }

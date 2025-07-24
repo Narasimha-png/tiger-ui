@@ -31,6 +31,11 @@ export class LeetcodeComponent {
     private authService: AuthService
   ) {}
 
+  ngOnInit() {
+    if (this.leetcode != null && this.leetcode.leetcodeProfile != null) {
+      this.userNameEmitter.emit(this.leetcode.leetcodeProfile);
+    }
+  }
   showLeetcodeProfile(): void {
     
     this.loading = true;

@@ -12,6 +12,7 @@ import { AuthService } from '../app/auth.service';
 import { Router } from '@angular/router';
 import { MessagingService } from '../app/messaging.service';
 import { DropdownModule } from 'primeng/dropdown';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,14 +27,29 @@ export class DashboardComponent {
   user: User | null = null;
   linkedin: LinkedinTotalPosts | null = null;
   visible: boolean = false;
-notificationsBlocked:boolean = false ;
-selectedHelpOption:any=null ;
+  notificationsBlocked: boolean = false;
+  selectedHelpOption: any = null;
   messageNotify: any;
-   options=[
-                            { label: 'Chrome', value: 'chrome', description: 'Go to Settings > Privacy and security > Site Settings > Notifications. Find Tiger and allow notifications.' },
-                            { label: 'Firefox', value: 'firefox', description: 'Go to Preferences > Privacy & Security > Permissions > Notifications > Settings. Find Tiger and allow notifications.' },
-                            { label: 'Edge', value: 'edge', description: 'Go to Settings > Cookies and site permissions > Notifications. Find Tiger and allow notifications.' }
-                        ] ;
+  options = [
+    {
+      label: 'Chrome',
+      value: 'chrome',
+      description:
+        'Go to Settings > Privacy and security > Site Settings > Notifications. Find Tiger and allow notifications.',
+    },
+    {
+      label: 'Firefox',
+      value: 'firefox',
+      description:
+        'Go to Preferences > Privacy & Security > Permissions > Notifications > Settings. Find Tiger and allow notifications.',
+    },
+    {
+      label: 'Edge',
+      value: 'edge',
+      description:
+        'Go to Settings > Cookies and site permissions > Notifications. Find Tiger and allow notifications.',
+    },
+  ];
   constructor(
     private profileService: ProfileService,
     private messageService: MessageService,
@@ -41,15 +57,12 @@ selectedHelpOption:any=null ;
     public router: Router,
     public messagingService: MessagingService
   ) {}
-  ngOnInit() {
+  async ngOnInit() {
     setTimeout(() => {
-      if (
-        Notification.permission == 'default'
-      ) {
+      if (Notification.permission == 'default') {
         this.visible = true;
-       
       } else if (Notification.permission == 'denied') {
-        this.notificationsBlocked = true ;
+        this.notificationsBlocked = true;
         this.messageService.add({
           severity: 'warn',
           summary: 'Notification Permission Blocked',
@@ -57,19 +70,19 @@ selectedHelpOption:any=null ;
         });
       }
     }, 2000);
-
-    this.profileService.todayLeetcodeStreak().subscribe(
-      (response) => {
-        this.leetcodeStreaks = response;
-      },
-      (error) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error Occured',
-          detail: 'Failed to fetch leetcode profile',
-        });
-      }
-    );
+    this.user = this.authService.getUser.value;
+    try {
+      const response = await lastValueFrom(
+        this.profileService.todayLeetcodeStreak()
+      );
+      this.leetcodeStreaks = response;
+    } catch (error) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error Occurred',
+        detail: 'Failed to fetch leetcode profile',
+      });
+    }
     this.profileService.totalLinkedinPosts().subscribe(
       (response) => {
         this.linkedin = response;
@@ -93,10 +106,6 @@ selectedHelpOption:any=null ;
           detail: 'Failed to fetch github profile',
         });
       }
-    );
-    this.authService.getUser.subscribe(
-      (response) => (this.user = response),
-      (error) => console.log(error)
     );
   }
   value = [
@@ -130,8 +139,8 @@ selectedHelpOption:any=null ;
     },
   ];
 
-   async requestNotificationPermission() {
-     this.visible = false;
+  async requestNotificationPermission() {
+    this.visible = false;
     const res: any = await this.messagingService.requestPermission();
     if (res) {
       this.messageService.add({
@@ -140,10 +149,9 @@ selectedHelpOption:any=null ;
         detail: 'You will now receive notifications from Tiger.',
       });
     }
-   
+
     this.messagingService.listen();
     this.messageNotify = this.messagingService.currentMessage;
     this.visible = false;
-   
   }
 }

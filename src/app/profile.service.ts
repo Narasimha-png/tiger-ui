@@ -103,57 +103,57 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
   getLeetCodeProfile(userName:String ):Observable<LeetCodeProfile> {
-    return this.http.get<LeetCodeProfile>(`https://tiger-backend-production.up.railway.app/api/tiger/leetcode/profile/${userName}`);
+    return this.http.get<LeetCodeProfile>(`http://localhost:8080/api/tiger/leetcode/profile/${userName}`);
   }
 
   updateLeetCodeProfile(userName: string ,  progress:number): Observable<Response> {
     
-    return this.http.patch<Response>(`https://tiger-backend-production.up.railway.app/api/tiger/user/leetcode`, {
+    return this.http.patch<Response>(`http://localhost:8080/api/tiger/user/leetcode`, {
       "leetcodeProfile":userName,
       "targetSubmissions":progress
     });
   }
   updateGitHubProfile(userName: string, progress:number): Observable<any> {
-    return this.http.patch<any>(`https://tiger-backend-production.up.railway.app/api/tiger/user/github`, {
+    return this.http.patch<any>(`http://localhost:8080/api/tiger/user/github`, {
       "githubProfile": userName,
       "targetCommits":progress
     });
   }
   getUserProfile():Observable<User>{
-    return this.http.get<User>('https://tiger-backend-production.up.railway.app/api/tiger/user/profile') ;
+    return this.http.get<User>('http://localhost:8080/api/tiger/user/profile') ;
   }
   logoutUser():Observable<Response>{
-    return this.http.post<Response>('https://tiger-backend-production.up.railway.app/api/tiger/user/logout', {}) ;
+    return this.http.post<Response>('http://localhost:8080/api/tiger/user/logout', {}) ;
   }
   userActivity():Observable<Activity[]>{
-    return this.http.get<Activity[]>('https://tiger-backend-production.up.railway.app/api/tiger/user/activity') ;
+    return this.http.get<Activity[]>('http://localhost:8080/api/tiger/user/activity') ;
   }
   getUserRoasts():Observable<Roasts[]>{
-    return this.http.get<Roasts[]>('https://tiger-backend-production.up.railway.app/api/tiger/user/roasts') ;
+    return this.http.get<Roasts[]>('http://localhost:8080/api/tiger/user/roasts') ;
   }
   getGithubProfile(userName:string):Observable<GithubProfile>{
-    return this.http.get<GithubProfile>(`https://tiger-backend-production.up.railway.app/api/tiger/github/profile/${userName}`) ;
+    return this.http.get<GithubProfile>(`http://localhost:8080/api/tiger/github/profile/${userName}`) ;
   }
   getStreak():Observable<StreakData>{
-    return this.http.get<StreakData>('https://tiger-backend-production.up.railway.app/api/tiger/user/streak') ;
+    return this.http.get<StreakData>('http://localhost:8080/api/tiger/user/streak') ;
   }
   todayLeetcodeStreak():Observable<Submission[]>{
-    return this.http.get<Submission[]>("https://tiger-backend-production.up.railway.app/api/tiger/leetcode/todaystreak") ;
+    return this.http.get<Submission[]>("http://localhost:8080/api/tiger/leetcode/todaystreak") ;
   }
   todayGitStreak():Observable<GitStreak[]>{
-    return this.http.get<GitStreak[]>("https://tiger-backend-production.up.railway.app/api/tiger/github/todaystreak") ;
+    return this.http.get<GitStreak[]>("http://localhost:8080/api/tiger/github/todaystreak") ;
   }
   totalLinkedinPosts():Observable<LinkedinTotalPosts>{
-    return this.http.get<LinkedinTotalPosts>('https://tiger-backend-production.up.railway.app/api/tiger/user/totalposts') ;
+    return this.http.get<LinkedinTotalPosts>('http://localhost:8080/api/tiger/user/totalposts') ;
 
   }
   toggleLinkedinService(linkedinService:boolean):Observable<Response>{
-    return this.http.post<Response>('https://tiger-backend-production.up.railway.app/api/tiger/user/linkedinservice', {
+    return this.http.post<Response>('http://localhost:8080/api/tiger/user/linkedinservice', {
        "linkedinPostService":linkedinService
     })
   }
   postFcmToken(fcmToken:string):Observable<Response>{
-    return this.http.post<Response>('https://tiger-backend-production.up.railway.app/api/tiger/user/addnotificationdevice', {
+    return this.http.post<Response>('http://localhost:8080/api/tiger/user/addnotificationdevice', {
        "fcmToken":fcmToken
     })
   }
