@@ -198,8 +198,7 @@ export class SignupComponent {
   }
 
   loginWithLinkedIn() {
-    window.location.href =
-      'https://tiger-backend-production.up.railway.app/api/tiger/user/linkedin/login';
+    this.profileService.loginRedirect() ;
   }
 
   getLeetcodeUserName(event: string) {

@@ -24,6 +24,7 @@ export class LeetcodeComponent {
   showProfileDiv: boolean = false;
   visibleLeetCode: boolean = false;
   isUpdatingLeetCodeProfile = false;
+  btnName: string='updating' ;
 
   constructor(
     private messageService: MessageService,
@@ -100,6 +101,11 @@ export class LeetcodeComponent {
 
   updateLeetCodeProfile() {
     this.isUpdatingLeetCodeProfile = true;
+
+    setTimeout(() => {
+      if(this.isUpdatingLeetCodeProfile)
+      this.btnName = 'Roasting';
+    }, 1000);
 
     this.profileService
       .updateLeetCodeProfile(this.leetcodeUserName, this.progress)

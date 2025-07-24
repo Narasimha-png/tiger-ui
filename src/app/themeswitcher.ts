@@ -85,7 +85,7 @@ export class ThemeSwitcher {
       const stored = localStorage.getItem(this.STORAGE_KEY);
       if (stored) return JSON.parse(stored);
     }
-    return { darkTheme: false };
+    return { darkTheme: true };
   }
 
   saveThemeState(state: { darkTheme: boolean }) {

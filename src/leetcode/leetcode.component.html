@@ -32,7 +32,7 @@
                     <p-button icon="pi pi-times" label="no, it's not me" severity="secondary"
                         (click)="resetLeetCode()"></p-button>
                     <p-button [disabled]="isUpdatingLeetCodeProfile"
-                        [label]="isUpdatingLeetCodeProfile ? 'updating' : 'Yes, it\'s me'"
+                        [label]="isUpdatingLeetCodeProfile ? btnName : 'Yes, it\'s me'"
                         [icon]="isUpdatingLeetCodeProfile ? 'pi pi-spin pi-spinner' : 'pi pi-check'" severity="success"
                         (click)="updateLeetCodeProfile()"></p-button>
                 </div>
