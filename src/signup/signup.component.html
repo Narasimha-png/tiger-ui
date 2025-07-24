@@ -83,9 +83,18 @@
                         <p-button disabled (onClick)="activateCallback(1)" label="Back" severity="secondary"
                             icon="pi pi-arrow-left" />
 
-                        <p-button (onClick)="activateCallback(3)" label="Next" icon="pi pi-arrow-right"
-                            iconPos="right" [disabled]="leetcodeUserName.length == 0 || githubUserName.length == 0" />
-                    </div>
+                       <p-button 
+  (onClick)="activateCallback(3)" 
+  label="Next" 
+  icon="pi pi-arrow-right"
+  iconPos="right" 
+  [disabled]="
+    !user || 
+    !user.leetcodeUserName || user.leetcodeUserName.length === 0 || 
+    !user.githubUserName || user.githubUserName.length === 0
+  " 
+/>
+  </div>
                 </ng-template>
             </p-step-panel>
 
@@ -154,7 +163,7 @@
         </div>
     </ng-template>
 
-
+ <p-toast />
 </p-dialog>
 <p-dialog header="GitHub 🤝 Dev" [modal]="true" [(visible)]="visibleGitHub" [style]="{ width: '25rem' }">
     <div class="flex items-center gap-4 mb-4">

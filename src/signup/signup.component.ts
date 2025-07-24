@@ -79,12 +79,12 @@ export class SignupComponent {
   ) {}
 
   ngOnInit() {
+    
     this.authService.refreshNav.subscribe((val) => {
       this.user = undefined;
       if (this.authService.loggedIn.value) {
         this.profileService.getUserProfile().subscribe((user) => {
           this.user = user;
-          console.log(user);
         });
       }
     });
@@ -102,8 +102,7 @@ export class SignupComponent {
         this.messageService.add({
           severity: 'success',
           summary: 'Login Successful',
-          detail: 'You have successfully logged in.',
-          life: 3000,
+          detail: 'You have successfully logged in.'
         });
       }
     });
