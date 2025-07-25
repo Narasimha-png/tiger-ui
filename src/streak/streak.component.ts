@@ -24,7 +24,7 @@ export class StreakComponent {
           this.streakData = response ;
           this.joinedMonth = new Date(this.streakData.joinedAt).getMonth() ;
         },
-        (error)=> console.log(JSON.stringify(error)) 
+        (error)=> console.error(JSON.stringify(error)) 
       )
     }
     getMonthName(): string {

@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -12,16 +12,24 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { authInterceptor } from './auth.interceptor';
 import { environment } from '../environment/environment';
+import { customInitializeApp } from './initializeApp';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+        {
+      provide: APP_INITIALIZER,
+      useFactory: customInitializeApp,
+      multi: true,
+      deps: []
+    },
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: { preset: Aura, options: { darkModeSelector: '.p-dark' } },
     }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    
 
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),

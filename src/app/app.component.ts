@@ -177,7 +177,7 @@ export class AppComponent {
             });
           },
           (error) => {
-            console.log(error);
+            console.error(error);
 
             this.messageService.add({
               severity: 'error',
