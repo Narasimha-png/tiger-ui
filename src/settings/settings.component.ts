@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class SettingsComponent {
   isLoading:boolean = false ;
+   checked: boolean = false;
   constructor(private messageService:MessageService, private profileService:ProfileService
     ,
     private confirmationService: ConfirmationService, private authService:AuthService, private router:Router
@@ -22,9 +23,9 @@ export class SettingsComponent {
 
   }
   ngOnInit(){
-
+    this.checked = this.authService.getUser.value?.linkedinPostService || false;
   }
-   checked: boolean = true;
+  
 
   onToggle(event: any) {
     this.checked = event.checked; 
@@ -32,6 +33,7 @@ export class SettingsComponent {
    this.profileService.toggleLinkedinService(this.checked).subscribe(
     (res)=>{
       this.isLoading = false ;
+      this.authService.refresh() ;
          this.messageService.add({
               severity: this.checked?'success':'error',
               summary: this.checked?'Linkedin post service activated.':'Linkedin post service has been deactivated.',

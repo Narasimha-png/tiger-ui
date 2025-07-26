@@ -32,6 +32,7 @@ export interface User {
   leetcodeProfile: string | null;
   targetSubmissions: number | null;
   joinedAt:string ;
+  linkedinPostService: boolean;
 }
 
 export interface Response{
