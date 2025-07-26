@@ -100,7 +100,7 @@ export interface GitStreak {
 })
 export class ProfileService {
 
-  isProduction: boolean = true;
+  isProduction: boolean = false;
   uri:string = this.isProduction ? 'https://tiger-backend-production.up.railway.app':'http://localhost:8080'; ;
 
   constructor(private http: HttpClient) { }

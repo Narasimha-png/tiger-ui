@@ -22,14 +22,20 @@ import { lastValueFrom } from 'rxjs';
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent {
-  leetcodeStreaks: Submission[] | null = null;
-  gitStreak: GitStreak[] | null = null;
+  leetcodeStreaks: Submission[] | undefined = undefined;
+  gitStreak: GitStreak[] | undefined = undefined;
   user: User | null = null;
   linkedin: LinkedinTotalPosts | null = null;
   visible: boolean = false;
   notificationsBlocked: boolean = false;
   selectedHelpOption: any = null;
+  loadingStates:string[] = [
+    'Loading Linkedin Posts......',
+    'Scanning Github Repos...', 
+    'Fetching Leetcode Submissions....'] ;
+    
   messageNotify: any;
+  responseCount:number = 0 ;
   options = [
     {
       label: 'Chrome',
@@ -58,33 +64,44 @@ export class DashboardComponent {
     public messagingService: MessagingService
   ) {}
   async ngOnInit() {
-    setTimeout(() => {
-      if (Notification.permission == 'default') {
-        this.visible = true;
-      } else if (Notification.permission == 'denied') {
-        this.notificationsBlocked = true;
-        this.messageService.add({
-          severity: 'warn',
-          summary: 'Notification Permission Blocked',
-          detail: 'Please enable notifications in your browser settings.',
-        });
-      }
-    }, 2000);
-    this.user = this.authService.getUser.value;
-    try {
-      const response = await lastValueFrom(
-        this.profileService.todayLeetcodeStreak()
-      );
-      this.leetcodeStreaks = response;
-    } catch (error) {
+   setTimeout(() => {
+  if (typeof window !== 'undefined' && 'Notification' in window) {
+    if (Notification.permission === 'default') {
+      this.visible = true;
+    } else if (Notification.permission === 'denied') {
+      this.notificationsBlocked = true;
       this.messageService.add({
-        severity: 'error',
-        summary: 'Error Occurred',
-        detail: 'Failed to fetch leetcode profile',
+        severity: 'warn',
+        summary: 'Notification Permission Blocked',
+        detail: 'Please enable notifications in your browser settings.',
       });
     }
+  }
+}, 2000);
+
+    this.user = this.authService.getUser.value;
+
+    this.authService.getUser.subscribe((user) => {
+      this.user = user;
+    }) ;
+    
+    this.profileService.todayLeetcodeStreak().subscribe(
+      (response) => {
+        this.responseCount = this.responseCount + 1 ;
+        this.leetcodeStreaks = response;
+      },
+      (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error Occured',
+          detail: 'Failed to fetch Leetcode submissions',
+        });
+      }
+    );
+   
     this.profileService.totalLinkedinPosts().subscribe(
       (response) => {
+         this.responseCount = this.responseCount + 1 ;
         this.linkedin = response;
       },
       (error) => {
@@ -97,6 +114,7 @@ export class DashboardComponent {
     );
     this.profileService.todayGitStreak().subscribe(
       (response) => {
+        this.responseCount = this.responseCount + 1 ;
         this.gitStreak = response;
       },
       (error) => {

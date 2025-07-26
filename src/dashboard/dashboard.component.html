@@ -1,19 +1,33 @@
 <div class="card min-h-[84vh]">
     <div class="px-8">
-        <div class="flex flex-col gap-2">
+        
               
-           <div class="border text-green-400 w-fit p-2 rounded-lg">Today's Target</div>
+        <div class="flex flex-col gap-2">
+            <div class="border text-green-400 w-fit p-2 rounded-lg">
+                Today's Target
+               
+            </div>
+              <div *ngIf="responseCount != 3" class="loading-carousel">
+                    <span *ngFor="let item of loadingStates; let i = index" class="carousel-item"
+                        [style.animation-delay]="i * 2 + 's'">
+                        {{ item }}
+                    </span>
+                </div>
             <div class="flex flex-wrap gap-4">
                 <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
                             <span class="text-surface-500 dark:text-surface-400 text-sm">Leetcode</span>
-                            @if(leetcodeStreaks == null ){
-                                  <p-skeleton [style.width]="'3rem'" [style.height]="'2rem'" styleClass="border-round"></p-skeleton>
-            
+                            @if(leetcodeStreaks == undefined ){
+                            <p-skeleton [style.width]="'3rem'" [style.height]="'2rem'"
+                                styleClass="border-round"></p-skeleton>
+
                             }@else{
-                            <span class="font-bold text-lg">{{ (this.leetcodeStreaks?.length??0) +"/"+
-                                (this.user?.targetSubmissions??0)}}</span>
+                            <span class="font-bold text-lg">{{
+                                (this.leetcodeStreaks?.length ?? 0) +
+                                "/" +
+                                (this.user?.targetSubmissions ?? 0)
+                                }}</span>
                             }
                         </div>
                         <span class="w-8 h-8 rounded-full inline-flex justify-center items-center text-center"
@@ -26,12 +40,16 @@
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
                             <span class="text-surface-500 dark:text-surface-400 text-sm">Github</span>
-                            @if(gitStreak == null){
-                                  <p-skeleton [style.width]="'3rem'" [style.height]="'2rem'" styleClass="border-round"></p-skeleton>
-            
+                            @if(gitStreak == undefined){
+                            <p-skeleton [style.width]="'3rem'" [style.height]="'2rem'"
+                                styleClass="border-round"></p-skeleton>
+
                             }@else{
-                            <span class="font-bold text-lg">{{ (this.gitStreak.length??0 )+ "/"+
-                               ( this.user?.targetCommits??0)}}</span>
+                            <span class="font-bold text-lg">{{
+                                (this.gitStreak?.length ?? 0) +
+                                "/" +
+                                (this.user?.targetCommits ?? 0)
+                                }}</span>
                             }
                         </div>
                         <span class="w-8 h-8 rounded-full inline-flex justify-center items-center text-center"
@@ -40,15 +58,18 @@
                         </span>
                     </div>
                 </p-card>
-<p-card class="flex-1" styleClass="border border-surface shadow-none">
+                <p-card class="flex-1" styleClass="border border-surface shadow-none">
                     <div class="flex justify-between gap-8">
                         <div class="flex flex-col gap-1">
                             <span class="text-surface-500 dark:text-surface-400 text-sm">LinkedInPosts</span>
                             @if(linkedin == null ){
-                                  <p-skeleton [style.width]="'3rem'" [style.height]="'2rem'" styleClass="border-round"></p-skeleton>
-            
+                            <p-skeleton [style.width]="'3rem'" [style.height]="'2rem'"
+                                styleClass="border-round"></p-skeleton>
+
                             }@else{
-                            <span class="font-bold text-lg">{{ linkedin?.totalPosts??0}}</span>
+                            <span class="font-bold text-lg">{{
+                                linkedin?.totalPosts ?? 0
+                                }}</span>
                             }
                         </div>
                         <span class="w-8 h-8 rounded-full inline-flex justify-center items-center text-center"
@@ -57,58 +78,64 @@
                         </span>
                     </div>
                 </p-card>
-
             </div>
 
             <p-dialog header="Enable Notifications" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }">
                 <div class="flex flex-col items-center gap-4">
                     <p class="mb-4">
-                        To stay updated with your achievements and important updates, please allow notifications from Tiger.
+                        To stay updated with your achievements and important updates, please
+                        allow notifications from Tiger.
                     </p>
                     <p-button label="Allow Notifications" icon="pi pi-bell" (click)="requestNotificationPermission()" />
                     <small class="text-surface-500">
-                        You can manage notification preferences anytime in your account settings.
+                        You can manage notification preferences anytime in your account
+                        settings.
                     </small>
                 </div>
             </p-dialog>
-            <p-dialog header="Notifications Blocked" [modal]="true" [(visible)]="notificationsBlocked" [style]="{ width: '30rem' , padding:'2rem 0px', height: 'auto' }">
+            <p-dialog header="Notifications Blocked" [modal]="true" [(visible)]="notificationsBlocked"
+                [style]="{ width: '30rem', padding: '2rem 0px', height: 'auto' }">
                 <div class="flex flex-col items-center gap-4">
                     <p class="mb-4">
-                        It looks like you've blocked notifications for Tiger. To receive important updates and achievement alerts, please enable notifications in your browser settings.
+                        It looks like you've blocked notifications for Tiger. To receive
+                        important updates and achievement alerts, please enable
+                        notifications in your browser settings.
                     </p>
-                    <p-dropdown 
-                        [options]="options" 
-                        [(ngModel)]="selectedHelpOption" 
+                    <p-dropdown [options]="options" [(ngModel)]="selectedHelpOption"
                         placeholder="How to change notification settings?">
                     </p-dropdown>
                     <div *ngIf="selectedHelpOption">
                         <small class="text-surface-500">
                             {{
-                                selectedHelpOption === 'chrome' ? 
-                                'Go to Settings > Privacy and security > Site Settings > Notifications. Find Tiger and allow notifications.' :
-                                selectedHelpOption === 'firefox' ? 
-                                'Go to Preferences > Privacy & Security > Permissions > Notifications > Settings. Find Tiger and allow notifications.' :
-                                selectedHelpOption === 'edge' ? 
-                                'Go to Settings > Cookies and site permissions > Notifications. Find Tiger and allow notifications.' : ''
-                            
+                            selectedHelpOption === "chrome"
+                            ? "Go to Settings > Privacy and security > Site Settings > Notifications. Find Tiger and
+                            allow notifications."
+                            : selectedHelpOption === "firefox"
+                            ? "Go to Preferences > Privacy & Security > Permissions > Notifications > Settings. Find
+                            Tiger and allow notifications."
+                            : selectedHelpOption === "edge"
+                            ? "Go to Settings > Cookies and site permissions > Notifications. Find Tiger and allow
+                            notifications."
+                            : ""
                             }}
                         </small>
                     </div>
                     <div class="h-[3rem]"></div>
                     <small class="text-surface-500">
-                        You can change notification permissions anytime in your browser or account settings.
+                        You can change notification permissions anytime in your browser or
+                        account settings.
                     </small>
                 </div>
             </p-dialog>
-    <p-toast />
+            <p-toast />
 
             <div>
                 <div class="flex justify-between mt-4">
-                  
-                    <p-button label="Monthly Streak" size="small" icon="pi pi-send" (click)="router.navigate(['streak'])" />
+                    <p-button label="Monthly Streak" size="small" icon="pi pi-send"
+                        (click)="router.navigate(['streak'])" />
                 </div>
             </div>
         </div>
     </div>
 </div>
- <p-toast />
+<p-toast />

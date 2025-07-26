@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { getToken, onMessage, isSupported } from 'firebase/messaging';
 import { environment } from '../environment/environment';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, lastValueFrom } from 'rxjs';
 import { Messaging } from '@angular/fire/messaging';
 import { ProfileService } from './profile.service';
 
@@ -37,7 +37,7 @@ async requestPermission() {
 
     if (token) {
       try {
-        await firstValueFrom(this.profileService.postFcmToken(token));
+        await lastValueFrom(this.profileService.postFcmToken(token));
         return true;
       } catch (err) {
         console.error('❌ Failed to post token', err);

@@ -103,7 +103,10 @@
 
 <div *ngIf="showPopover" class="absolute z-50 bg-white dark:bg-surface-900 shadow-lg  rounded-lg p-4 w-[14rem] d-flex flex-col gap-2"
      [ngStyle]="{ top: popoverTop + 'px', left: popoverLeft + 'px' }">
-  
+  <p class=" mt-3 flex items-center p-2 
+   hover:bg-slate-100 dark:hover:bg-slate-800">
+   <i class="pi pi-cog mr-2"></i> {{ user?.name || 'User' }}
+  </p>
 
   <app-leetcode [leetcode]="user"></app-leetcode>
 

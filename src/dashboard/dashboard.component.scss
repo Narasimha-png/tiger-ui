@@ -5,3 +5,28 @@
 .text-orange-600 {
   color: #ea580c;
 }
+.loading-carousel {
+  position: relative;
+  display: inline-block;
+  height: 24px;
+  width: 350px;
+
+  .carousel-item {
+    position: absolute;
+    opacity: 0;
+    animation: carouselFade 6s linear infinite;
+    left: 0;
+    top: 0;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+@keyframes carouselFade {
+  0%    { opacity: 0; }
+  5%    { opacity: 1; }
+  30%   { opacity: 1; }
+  35%   { opacity: 0; }
+  100%  { opacity: 0; }
+}
