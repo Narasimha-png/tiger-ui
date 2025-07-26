@@ -26,7 +26,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     if ((error.status === 401 || error.status === 403) && !token) {
       console.log('Unauthorized error. Navigating to /unauthorised');
       zone.run(() => {
-     //   router.navigate(['/unauthorised']);
+        router.navigate(['/unauthorised']);
       });
     }
 
