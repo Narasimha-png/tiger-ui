@@ -109,6 +109,71 @@
          
     </div>
   </div>
+  <div class="h-[2rem]"></div>
+    <div class="px-4 mx-auto shadow-lg border-2 rounded-lg bg-card text-card-foreground border-border flex gap-4 flex-wrap justify-center">
+        
+        <!-- Card Header -->
+        <div class="text-center pb-2 p-6">
+            <h1 class="text-2xl bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent font-semibold">
+                Tiger Premium
+            </h1>
+            <p class="text-lg mt-2 text-muted-foreground">
+                Unlock Your Fullest Potential
+            </p>
+            <p class="text-muted-foreground mt-2">
+                Go beyond basic writing — connect, learn, and grow with the best.
+            </p>
+        </div>
+        
+        <!-- Card Content -->
+        <div class="p-6 pt-4 space-y-6">
+            
+            <!-- Pricing -->
+            <div class="text-center">
+                <div class="flex items-baseline justify-center gap-1">
+                    <span class="text-3xl font-bold">₹50</span>
+                    <span class="text-muted-foreground">/ Life Time Validity</span>
+                </div>
+            </div>
+
+            <!-- Features List -->
+            <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                    <svg class="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span class="text-sm">Post your writing directly on LinkedIn</span>
+                </div>
+                
+                <div class="flex items-start gap-3">
+                    <svg class="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span class="text-sm">Daily notifications to keep you writing</span>
+                </div>
+                
+                <div class="flex items-start gap-3">
+                    <svg class="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span class="text-sm">Get roasted & mentored by top-notch performers</span>
+                </div>
+                
+                <div class="flex items-start gap-3">
+                    <svg class="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span class="text-sm">Early access to exclusive tips & tricks</span>
+                </div>
+            </div>
+
+            <!-- Stripe Button -->
+            <button (click)="paymentCheckout()" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 px-4 rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Pay using Stripe
+            </button>
+            
+        </div>
+    </div>
   
   <!-- <div class="flex flex-wrap justify-center gap-8">
     <div pAnimateOnScroll enterClass="animate-enter fade-in-10 spin-in-45 slide-in-from-t-12 animate-duration-1000"

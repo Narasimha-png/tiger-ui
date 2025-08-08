@@ -101,7 +101,7 @@ export interface GitStreak {
 })
 export class ProfileService {
 
-  isProduction: boolean = true;
+  isProduction: boolean = false;
   uri:string = this.isProduction ? 'https://tiger-backend-production.up.railway.app':'http://localhost:8080'; ;
 
   constructor(private http: HttpClient) { }
@@ -163,5 +163,8 @@ export class ProfileService {
     return this.http.post<Response>(`${this.uri}/api/tiger/user/addnotificationdevice`, {
        "fcmToken":fcmToken
     })
+  }
+  paymentCheckout():Observable<any> {
+    return this.http.get(`${this.uri}/tiger/payment/checkout`) ;
   }
 }
