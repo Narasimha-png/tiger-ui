@@ -21,7 +21,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
  
   return next(requestToSend).pipe(
   catchError((error: HttpErrorResponse) => {
-    const token = localStorage.getItem('token'); 
+    const token = localStorage.getItem('token'); // or however you store the token
 
     if ((error.status === 401 || error.status === 403) && !token) {
       console.log('Unauthorized error. Navigating to /unauthorised');
